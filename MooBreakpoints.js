@@ -18,7 +18,8 @@ provides:
 
 var MooBreakpoints = new Class({
     options: { breakPoints : [320, 480, 768, 1024],
-               delay: 250
+               delay: 250,
+               delayedResizeEvent: false
             },
     Implements: Options,
     initialize: function (options) {
@@ -30,27 +31,49 @@ var MooBreakpoints = new Class({
             
         this.setOptions(options);
         
+
+        
         resizeFirer = function () {
                 var i = 0,
                     windowSize = window.getSize(),
-                    fired = false;
-                
-                while((i <= (that.options.breakPoints.length -1)) && (!fired)) {
-                    if ((windowSize.x <= that.options.breakPoints[i])  && (that.options.breakPoints[i] !== currentBreakPoint)) {
-                        
-                        if (currentBreakPoint !== that.options.breakPoints[i]) {
-                            window.fireEvent('onWidthLeave' + currentBreakPoint, [currentBreakPoint, windowSize]);
+                    rangeLow,
+                    rangeHigh;
+                    
+                //test if still in currentBreakPoint
+                while(i <= (that.options.breakPoints.length-1)) {
+                    rangeLow = that.options.breakPoints[i];
+                    if (that.options.breakPoints[i+1] === undefined) {
+                        rangeHigh = screen.width;
+                    } else {
+                        rangeHigh = that.options.breakPoints[i+1];
+                    }
+                    //console.log(rangeLow+' .. '+rangeHigh);
+                    
+                    if (windowSize.x > rangeLow && windowSize.x <= rangeHigh) {
+                        //console.log('Im here');
+                        if (rangeHigh !== currentBreakPoint) {
+                            
+                            window.fireEvent('onWidthLeave'+currentBreakPoint,[currentBreakPoint,windowSize.x]);
+                            currentBreakPoint = rangeHigh;
+                            
+                            window.fireEvent('onWidthEnter'+currentBreakPoint,[currentBreakPoint,windowSize.x]);
                         }
-        
-                        window.fireEvent('onWidthEnter' + that.options.breakPoints[i], [that.options.breakPoints[i], windowSize]);
                         
-                        currentBreakPoint = that.options.breakPoints[i]
-                        fired = true;
                     }
                     
                     i += 1;
                 }
+               
+                
+                if(that.options.delayedResizeEvent) {  window.fireEvent('onDelayedResize', windowSize); }
+               
             };
+        
+        
+        if (this.options.breakPoints[0] !== 0) {
+            this.options.breakPoints.unshift(0);
+        }
+        this.options.breakPoints.sort();
         
         window.addEvent('resize', function () {
             clearTimeout(resizeDelay);

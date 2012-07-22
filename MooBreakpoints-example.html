@@ -4,39 +4,64 @@
 <head>
     <title>Example for MooBreakpoints</title>
     <style>
+        body {
+            display: relative;
+        }
         .narrow {
             background-color: rgb(100,100,100);
             color: white;
+        }
+        .med {
+            background-color: red;
+            color: green;
         }
         body {
             background-color: white;
             color: rgb(100,100,100);
         }
+        #widthReadout {
+            bottom: 10px;
+            right: 10px;
+            color: red;
+            position: absolute;
+        }
     </style>
-    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    
 </head>
 <body>
-    The current width breakpoint: <span id="currentWidth">-</span><br />
-    The previous width breakpoint: <span id="prevWidth">-</span>
+    The current width breakpoint: <span id="currentWidth">!</span><br />
     
+    <span id="widthReadout">-</span>
     
     <script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
     <script src="./MooBreakpoints.js"></script>
-    <script> 
-        var myBreakpoints = new MooBreakpoints({'breakPoints':[400,500,600]}),
+    <script>
+        window.addEvent('domready',function(){
+        var myBreakpoints = new MooBreakpoints({'breakPoints':[400,500], delayedResizeEvent: true}),    
             widthEnterHandler = function(theWidth,windowSize) {
-                $(document.body).addClass('narrow');
-                console.log('entered 400');
+                if (theWidth === 400) { $(document.body).addClass('narrow'); }
+                if (theWidth === 500) { $(document.body).addClass('med'); }
+                $('currentWidth').set('text',theWidth);
+                
+                
             },
             widthLeaveHandler = function(theWidth,windowSize) {
-                $('prevWidth').set('text',windowSize.x);
-                $(document.body).removeClass('narrow');
-                console.log('left 400');
-            }
-        window.addEvents({
-            'onWidthEnter400':widthEnterHandler,
-            'onWidthLeave400':widthLeaveHandler,
-            'onWidthEnter500':function(){console.log('500!');}
+                console.log(theWidth);
+                //$('prevWidth').set('text',windowSize.x);
+                if (theWidth === 400) { $(document.body).removeClass('narrow'); }
+                if (theWidth === 500) { $(document.body).removeClass('med'); } 
+
+            };
+            window.addEvents({
+                'onWidthEnter400':widthEnterHandler,
+                'onWidthLeave400':widthLeaveHandler,
+                'onWidthEnter500':widthEnterHandler,
+                'onWidthLeave500':widthLeaveHandler,
+                'onWidthLeave501':widthLeaveHandler
+            });
+            window.addEvent('onDelayedResize',function(wSize){
+                $('widthReadout').set('text',wSize.x);
+            });
         });
     </script>
 </body>
