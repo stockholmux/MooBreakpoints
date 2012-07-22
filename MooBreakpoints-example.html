@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example for MooBreakpoints</title>
+    <style>
+        .narrow {
+            background-color: rgb(100,100,100);
+            color: white;
+        }
+        body {
+            background-color: white;
+            color: rgb(100,100,100);
+        }
+    </style>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</head>
+<body>
+    The current width breakpoint: <span id="currentWidth">-</span><br />
+    The previous width breakpoint: <span id="prevWidth">-</span>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+    <script src="./MooBreakpoints.js"></script>
+    <script> 
+        var myBreakpoints = new MooBreakpoints({'breakPoints':[400,500,600]}),
+            widthEnterHandler = function(theWidth,windowSize) {
+                $(document.body).addClass('narrow');
+                console.log('entered 400');
+            },
+            widthLeaveHandler = function(theWidth,windowSize) {
+                $('prevWidth').set('text',windowSize.x);
+                $(document.body).removeClass('narrow');
+                console.log('left 400');
+            }
+        window.addEvents({
+            'onWidthEnter400':widthEnterHandler,
+            'onWidthLeave400':widthLeaveHandler,
+            'onWidthEnter500':function(){console.log('500!');}
+        });
+    </script>
+</body>
+</html>
