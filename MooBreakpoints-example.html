@@ -1,19 +1,10 @@
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>Example for MooBreakpoints</title>
     <style>
         body {
             display: relative;
-        }
-        .narrow {
-            background-color: rgb(100,100,100);
-            color: white;
-        }
-        .med {
-            background-color: red;
-            color: green;
         }
         body {
             background-color: white;
@@ -25,43 +16,74 @@
             color: red;
             position: absolute;
         }
+        .clickable {
+            text-decoration: underline;
+            color: blue;
+            cursor: pointer;
+        }
     </style>
-    
 </head>
 <body>
-    The current width breakpoint: <span id="currentWidth">!</span><br />
-    
+    <div id="breakpoint">!</div>
+    <div id="message"></div>
     <span id="widthReadout">-</span>
     
     <script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
     <script src="./MooBreakpoints.js"></script>
     <script>
         window.addEvent('domready',function(){
-        var myBreakpoints = new MooBreakpoints({'breakPoints':[400,500], delayedResizeEvent: true}),    
-            widthEnterHandler = function(theWidth,windowSize) {
-                if (theWidth === 400) { $(document.body).addClass('narrow'); }
-                if (theWidth === 500) { $(document.body).addClass('med'); }
-                $('currentWidth').set('text',theWidth);
-                
-                
-            },
-            widthLeaveHandler = function(theWidth,windowSize) {
-                console.log(theWidth);
-                //$('prevWidth').set('text',windowSize.x);
-                if (theWidth === 400) { $(document.body).removeClass('narrow'); }
-                if (theWidth === 500) { $(document.body).removeClass('med'); } 
-
-            };
-            window.addEvents({
+            var myBreakpoints,
+                mediumWidthClickEvent = function() {
+                    alert('you clicked this when the window was between 400 and 500');
+                }
+                widthEnterHandler = function(currentBreakPoint,windowSize) {
+                    if (currentBreakPoint === 400) {
+                        $('breakpoint').set('text','Between 0 and 400');
+                        $('message').set('text','This appears on between 0 and 400. It is only clickable between 400 and 500. It will disappear after 500.');
+                    }
+                    if (currentBreakPoint === 500) {
+                        $('breakpoint').set('text','Between 400 and 500');
+                        $('message').addEvent('click',mediumWidthClickEvent)
+                                    .addClass('clickable');
+                    }
+                },
+                widthLeaveHandler = function(fromBreakPoint, toBreakPoint, windowSize) {
+                    if ((fromBreakPoint !== 400) || (toBreakPoint !== 500)) {
+                        /*  if we are moving from 400 to 500
+                            we don't need to clear the breakpoint text */
+                        $('breakpoint').set('text','');
+                    }
+                    
+                    if (toBreakPoint !== 500) {
+                        $('message').set('text','');
+                        $('message').removeEvent('click',mediumWidthClickEvent)
+                                    .removeClass('clickable');
+                    } 
+                };
+            
+            /* Be sure and add your events BEFORE you initialize MooBreakpoints 
+                this allows your initial screen width events to be fired */
+            
+             window.addEvents({
                 'onWidthEnter400':widthEnterHandler,
                 'onWidthLeave400':widthLeaveHandler,
                 'onWidthEnter500':widthEnterHandler,
-                'onWidthLeave500':widthLeaveHandler,
-                'onWidthLeave501':widthLeaveHandler
+                'onWidthLeave500':widthLeaveHandler
             });
             window.addEvent('onDelayedResize',function(wSize){
                 $('widthReadout').set('text',wSize.x);
             });
+
+            myBreakpoints = new MooBreakpoints({
+            
+                /* fire an event on leave/enter at window width of 400 and 500 */
+                'breakPoints':[400,500],
+                
+                /* fire 'onDelayedResize' when the window is resized
+                it is delayed so you don't get hundreds of events fired */
+                delayedResizeEvent: true 
+            })
+
         });
     </script>
 </body>
