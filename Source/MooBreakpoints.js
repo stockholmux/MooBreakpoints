@@ -12,8 +12,10 @@ authors:
 license:
     - MIT-style license
 
-provides:
-    - MooBreakpoints
+requires:
+    - core/1.2.5
+    
+provides:[MooBreakpoints]
 */
 
 var MooBreakpoints = new Class({
