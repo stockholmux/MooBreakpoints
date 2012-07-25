@@ -43,3 +43,5 @@ default value - true
 
 This will control if the width of your window is measured after the dom is ready. If it is set to true, your resize events will fire after you have initalized the plugin or when the dom is ready, whichever is last. This gets a little tricky - you will want to setup your _onWidthEnterXXX_/_onWidthLeaveXXX_ events before you create the instance of the plugin if you want them to immediately fire. 
 
+##This is awesome. Where can I find more awesome stuff?
+You can go to my website https://stockholmux.com/
