@@ -2,11 +2,9 @@
 ---
 description: Provides events when the window passes width thresholds - a good compliment to media queries
     
-authors:
-    - Kyle J. Davis (http://stockholmux.com)
+authors: Kyle J. Davis
 
-license:
-    - MIT-style license
+license: MIT-style
 
 requires:
     - core/1.2.5
