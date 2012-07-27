@@ -10,16 +10,17 @@ A few months ago [benbrown](https://github.com/benbrown) created [breakpoints](h
 See it in action, take a look at the [demo](http://stockholmux.github.com/MooBreakpoints/MooBreakpoints-example.html).
 
 ##How to Use
-```javascript
-//create an instance of the plugin
-myBreakpoints = new MooBreakpoints(/*your options here*/);
 
-//add events - a few breakpoints are baked in, you can set your own in the optiopns
-window.addEvents({
-                'onWidthEnter480':function() {/* do stuff */},
-                'onWidthLeave480':function() {/* do other stuff */}
-});
-```
+    #JS
+    //create an instance of the plugin
+    myBreakpoints = new MooBreakpoints(/*your options here*/);
+    
+    //add events - a few breakpoints are baked in, you can set your own in the optiopns
+    window.addEvents({
+                    'onWidthEnter480':function() { stuff(); },
+                    'onWidthLeave480':function() { otherStuff(); }
+    });
+
 
 ##What kind of options do I have?
 Four basic options exist - you can see them in action in the example.
@@ -27,9 +28,10 @@ Four basic options exist - you can see them in action in the example.
 Default value - [320, 480, 768, 1024]
 
 This is an array of screen widths that you want to respond to - the number represents the upper end of a range. So, this array:
-```
-[100,200,300]
-```
+
+    #JS
+    [100,200,300]
+
 would respond in three different widths - 0-100 (_onWidthEnter100_), 101-200 (_onWidthEnter200_), 201-300 (_onWidthEnter300_). If you want to fire an event when it is great than a certian width you can use a _onWidthLeaveXXX_ function and test with width in the event.
 
 ###delay
@@ -48,4 +50,4 @@ default value - true
 This will control if the width of your window is measured after the dom is ready. If it is set to true, your resize events will fire after you have initalized the plugin or when the dom is ready, whichever is last. This gets a little tricky - you will want to setup your _onWidthEnterXXX_/_onWidthLeaveXXX_ events before you create the instance of the plugin if you want them to immediately fire. 
 
 ##This is awesome. Where can I find more awesome stuff?
-You can go to my website http://stockholmux.com/
+You can go to my website (http://stockholmux.com/)
