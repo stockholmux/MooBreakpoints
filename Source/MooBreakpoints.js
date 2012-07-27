@@ -9,7 +9,8 @@ license: MIT-style
 requires:
     - core/1.2.5
     
-provides:[MooBreakpoints]
+provides: [MooBreakpoints]
+
 
 ...
 */
