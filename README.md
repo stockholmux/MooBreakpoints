@@ -1,14 +1,15 @@
 # MooBreakpoints
-## A Mootools Plugin for responsive javascript
+A Mootools Plugin for responsive javascript
 
 Media quries are great and can go a long way in shifting your design around depending on the width of the browser window(among other things), but if you back your design up with specific javascript, you will need something to to alert your script that your design is a different.
- 
+
+##Backstory
 A few months ago [benbrown](https://github.com/benbrown) created [breakpoints](https://github.com/xoxco/breakpoints/) for jQuery. I was working on a [MooTools](http://mootools.net/) project and I needed the breakpoint functionality. So, I took Ben's concept and wrote a moo flavored plugin.
 
 ##Example
 See it in action, take a look at the [demo](http://stockholmux.github.com/MooBreakpoints/MooBreakpoints-example.html).
 
-##How it works
+##How to Use
 ```javascript
 //create an instance of the plugin
 myBreakpoints = new MooBreakpoints(/*your options here*/);
