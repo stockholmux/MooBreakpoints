@@ -6,8 +6,7 @@ authors: Kyle J. Davis
 
 license: MIT-style
 
-requires:
-    - core/1.2.5
+requires: [core/1.2.5]
     
 provides: [MooBreakpoints]
 
