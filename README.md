@@ -5,6 +5,9 @@ Media quries are great and can go a long way in shifting your design around depe
  
 A few months ago [benbrown](https://github.com/benbrown) created [breakpoints](https://github.com/xoxco/breakpoints/) for jQuery. I was working on a [MooTools](http://mootools.net/) project and I needed the breakpoint functionality. So, I took Ben's concept and wrote a moo flavored plugin.
 
+##Example
+See it in action, take a look at the [demo](http://stockholmux.github.com/MooBreakpoints/MooBreakpoints-example.html).
+
 ##How it works
 ```javascript
 //create an instance of the plugin
