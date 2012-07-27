@@ -1,10 +1,6 @@
 /*
 ---
-description: 
-    - provides events when the window passes width thresholds
-    - can be used as a polyfill for media query support
-    - can be used as a complement to media queries
-        (i.e. javascript that is only needed with media queries)
+description: Provides events when the window passes width thresholds - a good compliment to media queries
     
 authors:
     - Kyle J. Davis (http://stockholmux.com)
